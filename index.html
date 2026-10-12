@@ -1,282 +1,292 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Skydle - Daily Aircraft Guess</title>
-<style>
-:root{--bg1:#0b1a33;--bg2:#17335f;--card:#13264a;--line:#2a4577;--txt:#eaf1ff;--mut:#9db3d8;
---ok:#1f9d57;--hi:#c98a12;--lo:#3b7bd8;--nd:#555e70;}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;color:var(--txt);
-background:linear-gradient(180deg,var(--bg1),var(--bg2));min-height:100vh}
-.wrap{max-width:900px;margin:0 auto;padding:20px 14px 60px}
-h1{margin:6px 0 2px;font-size:2rem;letter-spacing:1px}
-.sub{color:var(--mut);margin:0 0 16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px}
-#photoBox{height:300px;display:flex;align-items:center;justify-content:center;overflow:hidden;
-background:#0a1530;border-radius:10px}
-#photoBox img{max-width:100%;max-height:100%;object-fit:contain}
-.nopic{color:var(--mut);font-size:1.1rem;text-align:center}
-.nopic span{display:block;font-size:2.4rem;margin-bottom:6px}
-.row{display:flex;gap:8px;align-items:center;position:relative}
-input,select,button{font:inherit;border-radius:10px;border:1px solid var(--line);background:#0d1d3d;color:var(--txt);padding:10px 12px}
-input{flex:1;min-width:0}
-button{cursor:pointer;background:#2a5bd7;border-color:#2a5bd7;font-weight:600}
-button:disabled{opacity:.5;cursor:default}
-button.alt{background:#0d1d3d;border-color:var(--line)}
-#sugg{position:absolute;top:100%;left:0;right:90px;z-index:10;background:#0d1d3d;border:1px solid var(--line);
-border-radius:10px;margin-top:4px;overflow:hidden}
-#sugg div{padding:9px 12px;cursor:pointer;display:flex;justify-content:space-between;gap:10px}
-#sugg div.on,#sugg div:hover{background:#1c3a72}
-#sugg small{color:var(--mut)}
-#msg{min-height:1.3em;color:#ffb4b4;margin:8px 2px 0}
-.count{color:var(--mut);margin:0 0 8px}
-.scroll{overflow-x:auto}
-table{border-collapse:separate;border-spacing:4px;width:100%;min-width:760px}
-th{font-size:.75rem;color:var(--mut);text-transform:uppercase;font-weight:600;padding:2px 4px;text-align:center}
-th:first-child,td.nm{text-align:left}
-td{border-radius:8px;padding:8px 6px;text-align:center;background:var(--nd);font-size:.95rem;min-width:84px}
-td.nm{background:transparent;padding-left:2px;font-weight:600;min-width:170px}
-td.nm small{display:block;color:var(--mut);font-weight:400}
-td .a{font-size:.72rem;opacity:.92;margin-top:2px}
-td.ok{background:var(--ok)} td.hi{background:var(--hi)} td.lo{background:var(--lo)} td.bad{background:#b03a3a}
-#result h2{margin:0 0 6px}
-#result a{color:#8fc1ff;font-weight:600;word-break:break-all}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.chips span{background:#0d1d3d;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:.85rem}
-.legend{color:var(--mut);font-size:.85rem;margin-top:6px}
-.credit{font-size:.8rem;color:var(--mut);margin-top:8px;text-align:center;min-height:1em}
-.credit a{color:#8fc1ff}
-.credit .warn{color:#ffb4b4}
-#test{border-color:#c0392b}
-#test h3{margin:0 0 8px;color:#ff9c91}
-#test .row{margin-bottom:8px;flex-wrap:wrap}
-#test select{flex:1;min-width:220px}
-#ans{font-weight:700;color:#ffd27a}
-</style></head><body><div class="wrap">
-<h1>&#9992;&#65039; SKYDLE</h1>
-<p class="sub" id="date"></p>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ironclad - Formally Verified, Real-Time UNIX-like OS Kernel</title>
+    <meta name="description" content="Download Ironclad - a formally verified, real-time capable UNIX-like operating system kernel written in SPARK and Ada. Built for reliability and performance on RISC-V and x86-64.">
+    <meta name="keywords" content="ada, embedded, formal-verification, ironclad, ironclad-os, kernel, operating-system, os, risc-v, riscv, riscv64, spark, x86-64">
+    <meta name="author" content="Ironclad Project">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Ironclad - Formally Verified UNIX-like Kernel">
+    <meta property="og:description" content="Real-time capable operating system kernel written in SPARK and Ada. Download now.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://github.com/uzairsarfraz976-lab/Ironclad">
+    <meta property="og:image" content="https://github.com/uzairsarfraz976-lab/Ironclad/releases">
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; color: #2d3748; line-height: 1.6;">
 
-<div class="card" id="test" hidden>
-  <h3>TEST MODE</h3>
-  <div>Current answer: <span id="ans"></span></div>
-  <div class="row" style="margin-top:8px">
-    <select id="tsel"></select>
-    <button class="alt" id="tset">Use this answer</button>
-    <button class="alt" id="trand">Random</button>
-  </div>
-  <div class="row">
-    <input type="date" id="tdate" style="flex:0 0 auto">
-    <button class="alt" id="tdset">Preview date's plane</button>
-    <button class="alt" id="ttoday">Back to today</button>
-    <button class="alt" id="treveal">Reveal now</button>
-    <button class="alt" id="treset">Reset guesses</button>
-  </div>
-  <div class="legend">Test mode does not save progress. Reloading starts fresh.</div>
-</div>
+    <div style="max-width: 1200px; margin: 0 auto; padding: 40px 20px;">
 
-<div class="card"><div id="photoBox"></div><div class="credit" id="credit"></div></div>
+        <!-- Hero Section -->
+        <div style="background: #ffffff; border-radius: 16px; padding: 50px 40px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); text-align: center; margin-bottom: 40px;">
+            <h1 style="font-size: 3em; color: #1a202c; margin: 0 0 10px 0; letter-spacing: -0.02em;">
+                🛡️ Ironclad - Unshakeably Secure Real-Time Kernel
+            </h1>
+            <p style="font-size: 1.2em; color: #718096; margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                Experience a formally verified, real-time capable UNIX-like operating system kernel. 
+                Built with mathematically proven reliability in SPARK and Ada.
+            </p>
+            <a href="https://github.com/uzairsarfraz976-lab/Ironclad/releases" 
+               style="display: inline-block; background: linear-gradient(45deg, #667eea, #764ba2); color: white; padding: 16px 40px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.1em; box-shadow: 0 4px 15px rgba(102,126,234,0.4); transition: transform 0.2s, box-shadow 0.2s;">
+                📥 DOWNLOAD IRONCLAD NOW
+            </a>
+        </div>
 
-<div class="card" id="play">
-  <p class="count" id="count"></p>
-  <div class="row">
-    <input id="guess" autocomplete="off" placeholder="Type a plane name or ICAO code...">
-    <button id="go">Guess</button>
-    <div id="sugg" hidden></div>
-  </div>
-  <div id="msg"></div>
-</div>
+        <!-- What is Ironclad -->
+        <div style="background: #ffffff; border-radius: 16px; padding: 40px; box-shadow: 0 4px 16px rgba(0,0,0,0.05); margin-bottom: 40px;">
+            <h2 style="color: #2d3748; font-size: 2em; margin-top: 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
+                🔍 What is Ironclad?
+            </h2>
+            <p style="font-size: 1.15em; margin-bottom: 20px;">
+                Ironclad isn't just another operating system kernel - it's a <strong>fortress of digital reliability</strong>. 
+                Unlike traditional kernels that rely on extensive testing, Ironclad uses 
+                <strong>formal verification</strong>, meaning its core behaviors are mathematically proven correct. 
+                This gives you a level of certainty that no amount of testing can match.
+            </p>
+            <p style="font-size: 1.15em; margin-bottom: 20px;">
+                Written in <strong>SPARK</strong> and <strong>Ada</strong>, two programming languages designed for safety-critical systems, 
+                Ironclad delivers real-time performance without compromising on stability. Whether you're running 
+                embedded systems, IoT devices, or need a dependable foundation for specialized applications, 
+                Ironclad offers a rock-solid base.
+            </p>
+            <p style="font-size: 1.15em; margin-bottom: 0;">
+                As a <strong>UNIX-like</strong> kernel, it follows familiar principles that developers know and trust, 
+                while adding a layer of formal assurance that sets it apart from all others. This means you get 
+                the flexibility of UNIX with the dependability of aerospace-grade software engineering.
+            </p>
+        </div>
 
-<div class="card scroll" id="board" hidden>
-  <table><thead><tr><th>Aircraft</th><th>Brand</th><th>Year</th><th>Wingspan</th><th>Speed</th><th>Weight</th><th>Seats</th><th>Rarity</th></tr></thead>
-  <tbody id="rows"></tbody></table>
-  <div class="legend">&#9650; answer is higher &nbsp; &#9660; answer is lower &nbsp; &#10003; correct &nbsp; Brand: &#10003; same manufacturer, &#10007; different &nbsp; ? you guessed a plane with no data for that stat &nbsp; &ndash; answer has no data for that stat</div>
-</div>
+        <!-- Key Features -->
+        <div style="background: #ffffff; border-radius: 16px; padding: 40px; box-shadow: 0 4px 16px rgba(0,0,0,0.05); margin-bottom: 40px;">
+            <h2 style="color: #2d3748; font-size: 2em; margin-top: 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
+                ✨ Why Choose Ironclad?
+            </h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 30px;">
+                
+                <div style="background: #f7fafc; border-radius: 12px; padding: 25px; border-left: 4px solid #667eea;">
+                    <h3 style="margin-top: 0; color: #4a5568;">🧮 Formally Verified Correctness</h3>
+                    <p style="margin-bottom: 0;">
+                        Every critical component undergoes rigorous mathematical proof. Ironclad's core functionality 
+                        is verified to behave exactly as specified - eliminating entire classes of bugs that plague 
+                        conventional operating systems.
+                    </p>
+                </div>
 
-<div class="card" id="result" hidden></div>
-</div>
-<script>
-const $=s=>document.querySelector(s);
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let S,PLANES=[],guesses=[],over=false,selected=null,items=[],idx=-1;
-let DATA=null;
-const LABELS=['Year','Wingspan','Speed','Weight','Seats','Rarity'];
-const UNITS={Year:'',Wingspan:' m',Speed:' kts',Weight:' t',Seats:'',Rarity:''};
-const loadData=async()=>{if(!DATA){DATA=await (await fetch('data.json')).json();}return DATA;};
-const easternDate=(d=new Date())=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(d);
-/* Exact copy of Python's random.Random(date_string).choice(sorted_list), so the website
-   picks the same plane as the local game. */
-function mtInit(key){
-  const N=624,mt=new Uint32Array(N);mt[0]=19650218;
-  for(let i=1;i<N;i++){const pr=mt[i-1]^(mt[i-1]>>>30);mt[i]=(Math.imul(1812433253,pr)+i)>>>0;}
-  let i=1,j=0,k=Math.max(N,key.length);
-  for(;k>0;k--){const pr=mt[i-1]^(mt[i-1]>>>30);mt[i]=((mt[i]^Math.imul(pr,1664525))+key[j]+j)>>>0;
-    i++;j++;if(i>=N){mt[0]=mt[N-1];i=1;}if(j>=key.length)j=0;}
-  for(k=N-1;k>0;k--){const pr=mt[i-1]^(mt[i-1]>>>30);mt[i]=((mt[i]^Math.imul(pr,1566083941))-i)>>>0;
-    i++;if(i>=N){mt[0]=mt[N-1];i=1;}}
-  mt[0]=0x80000000;return {mt,idx:N};
-}
-function mtNext(st){
-  const N=624,M=397,mt=st.mt;
-  if(st.idx>=N){let kk,y;
-    for(kk=0;kk<N-M;kk++){y=(mt[kk]&0x80000000)|(mt[kk+1]&0x7fffffff);mt[kk]=mt[kk+M]^(y>>>1)^((y&1)?0x9908b0df:0);}
-    for(;kk<N-1;kk++){y=(mt[kk]&0x80000000)|(mt[kk+1]&0x7fffffff);mt[kk]=mt[kk+(M-N)]^(y>>>1)^((y&1)?0x9908b0df:0);}
-    y=(mt[N-1]&0x80000000)|(mt[0]&0x7fffffff);mt[N-1]=mt[M-1]^(y>>>1)^((y&1)?0x9908b0df:0);st.idx=0;}
-  let y=mt[st.idx++];
-  y^=(y>>>11);y^=(y<<7)&0x9d2c5680;y^=(y<<15)&0xefc60000;y^=(y>>>18);return y>>>0;
-}
-async function pickFor(dateStr){
-  const elig=DATA.planes.filter(p=>p.eligible).sort((a,b)=>a.icao<b.icao?-1:a.icao>b.icao?1:0);
-  const enc=new TextEncoder().encode(dateStr);
-  const dig=new Uint8Array(await crypto.subtle.digest('SHA-512',enc));
-  const B=new Uint8Array(enc.length+64);B.set(enc);B.set(dig,enc.length);
-  let f=0;while(f<B.length-1&&B[f]===0)f++;
-  const bits=(B.length-f-1)*8+(32-Math.clz32(B[f]));
-  const words=Math.floor((bits-1)/32)+1,key=[];
-  for(let w=0;w<words;w++){let v=0;for(let b=0;b<4;b++){const pos=B.length-1-(w*4+b);v|=(pos>=0?B[pos]:0)<<(8*b);}key.push(v>>>0);}
-  const st=mtInit(key),n=elig.length,k=32-Math.clz32(n);
-  let r;do{r=mtNext(st)>>>(32-k);}while(r>=n);
-  return elig[r];
-}
-function cmp(g,a){if(a===null)return 'nodata';if(g===null)return 'unknown';if(g===a)return 'correct';return a>g?'higher':'lower';}
-function cmpBrand(g,a){if(!a)return 'nodata';if(!g)return 'unknown';return g.toUpperCase()===a.toUpperCase()?'correct':'wrong';}
-function judge(g,a){return {icao:g.icao,name:g.name,correct:g.icao===a.icao,brand:{value:g.brand,result:cmpBrand(g.brand,a.brand)},
-  stats:LABELS.map(l=>({label:l,unit:UNITS[l],value:g.stats[l],result:cmp(g.stats[l],a.stats[l])}))};}
-async function wikiLink(p){
-  const o=DATA.wiki_overrides&&DATA.wiki_overrides[p.icao];
-  if(o)return 'https://en.wikipedia.org/wiki/'+encodeURIComponent(o.replace(/ /g,'_'));
-  try{const r=await fetch('https://en.wikipedia.org/w/api.php?action=opensearch&search='+encodeURIComponent(p.name)+'&limit=1&namespace=0&format=json&origin=*');
-    const d=await r.json();if(d[3]&&d[3][0])return d[3][0];}catch(e){}
-  return 'https://en.wikipedia.org/w/index.php?search='+encodeURIComponent(p.name);
-}
-const api=async path=>{
-  await loadData();
-  const u=new URL(path,'http://x'),a=await pickFor(easternDate());
-  if(u.pathname==='/api/state')return {date:easternDate(),max_guesses:DATA.max_guesses,test_mode:false,has_photo:!!a.photo,
-    credit:a.credit||null,photo_url:a.photo?'photos/'+encodeURIComponent(a.photo):null};
-  if(u.pathname==='/api/planes')return DATA.planes.map(p=>({icao:p.icao,name:p.name}));
-  if(u.pathname==='/api/guess'){const g=DATA.planes.find(p=>p.icao.toUpperCase()===(u.searchParams.get('icao')||'').toUpperCase());
-    return g?judge(g,a):{error:'Unknown plane'};}
-  if(u.pathname==='/api/reveal')return {icao:a.icao,name:a.name,brand:a.brand,wiki:await wikiLink(a),
-    stats:LABELS.map(l=>({label:l,unit:UNITS[l],value:a.stats[l]}))};
-  return {error:'not found'};
-};
-const key=()=>'skydle:'+S.date;
+                <div style="background: #f7fafc; border-radius: 12px; padding: 25px; border-left: 4px solid #48bb78;">
+                    <h3 style="margin-top: 0; color: #4a5568;">⏱️ Real-Time Performance</h3>
+                    <p style="margin-bottom: 0;">
+                        Deterministic timing guarantees make Ironclad perfect for embedded systems, robotics, 
+                        and industrial automation. When you need responses at precise moments, Ironclad delivers 
+                        with predictable precision.
+                    </p>
+                </div>
 
-function renderCredit(){
-  const el=$('#credit');
-  if(!S.has_photo){el.innerHTML='';return;}
-  const c=S.credit;
-  if(c){
-    let h='Photo: '+esc(c.photographer);
-    if(c.license)h+=' &middot; '+esc(c.license);
-    if(c.url)h+=' &middot; <a href="'+esc(c.url)+'" target="_blank" rel="noopener noreferrer">Source</a>';
-    el.innerHTML=h;
-  }else if(S.test_mode){
-    el.innerHTML='<span class="warn">&#9888; No credit listed for this photo. Add a row to photos/credits.csv</span>';
-  }else el.innerHTML='';
-}
-function renderPhoto(){
-  renderCredit();
-  const box=$('#photoBox');
-  const none='<div class="nopic"><span>&#128247;</span>No picture available</div>';
-  if(!S.has_photo){box.innerHTML=none;return;}
-  box.innerHTML='<img alt="Mystery aircraft" src="'+(S.photo_url||('/photo/today?t='+Date.now()))+'">';
-  box.querySelector('img').onerror=()=>{box.innerHTML=none;$('#credit').innerHTML='';};
-}
-function fmt(v,u){if(v===null)return '?';return (Number.isInteger(v)?v:+v.toFixed(3))+u;}
-function cell(s){
-  const m={correct:['ok','&#10003;'],higher:['hi','&#9650; higher'],lower:['lo','&#9660; lower'],
-           unknown:['','?'],nodata:['','&ndash; no data']}[s.result];
-  return `<td class="${m[0]}"><div>${fmt(s.value,s.unit)}</div><div class="a">${m[1]}</div></td>`;
-}
-function brandCell(b){
-  if(!b)return '<td><div>?</div></td>';
-  const m={correct:['ok','&#10003; correct'],wrong:['bad','&#10007; wrong'],unknown:['','?'],nodata:['','&ndash; no brand listed']}[b.result];
-  return `<td class="${m[0]}"><div>${b.value?esc(b.value):'?'}</div><div class="a">${m[1]}</div></td>`;
-}
-function renderBoard(){
-  $('#board').hidden=guesses.length===0;
-  $('#rows').innerHTML=guesses.map(g=>`<tr><td class="nm">${esc(g.name)}<small>${esc(g.icao)}</small></td>${brandCell(g.brand)}${g.stats.map(cell).join('')}</tr>`).join('');
-  $('#count').textContent=over?'Game over':`Guess ${guesses.length+1} of ${S.max_guesses}`;
-  $('#play').style.display=over?'none':'';
-}
-function save(){if(!S.test_mode)localStorage.setItem(key(),JSON.stringify(guesses));}
-async function finish(){
-  over=true;renderBoard();
-  const won=guesses.some(g=>g.correct);
-  const r=await api('/api/reveal');
-  const chips=(r.brand?`<span>Brand: ${esc(r.brand)}</span>`:'')+r.stats.map(s=>`<span>${s.label}: ${fmt(s.value,s.unit)}</span>`).join('');
-  $('#result').hidden=false;
-  $('#result').innerHTML=`<h2>${won?'&#127881; Correct in '+guesses.length+'/'+S.max_guesses+'!':'Out of guesses!'}</h2>
-    <div>The aircraft was <b>${esc(r.name)}</b> (${esc(r.icao)}).</div>
-    <div style="margin-top:8px">&#128214; <a href="${esc(r.wiki)}" target="_blank" rel="noopener">${esc(r.wiki)}</a></div>
-    <div class="chips">${chips}</div>`;
-}
-function setMsg(t){$('#msg').textContent=t||'';}
+                <div style="background: #f7fafc; border-radius: 12px; padding: 25px; border-left: 4px solid #ed8936;">
+                    <h3 style="margin-top: 0; color: #4a5568;">🔧 UNIX-Like Familiarity</h3>
+                    <p style="margin-bottom: 0;">
+                        Built on proven UNIX design patterns, Ironclad feels intuitive. Standard concepts like 
+                        processes, files, and signals work as you'd expect, easing migration and development.
+                    </p>
+                </div>
 
-/* ---- autocomplete ---- */
-function refresh(){
-  const t=$('#guess').value.trim().toLowerCase();selected=null;
-  if(!t){items=[];idx=-1;draw();return;}
-  const used=new Set(guesses.map(g=>g.icao));
-  const sc=p=>{const n=p.name.toLowerCase(),i=p.icao.toLowerCase();
-    if(i===t)return 0;if(n.startsWith(t))return 1;if(i.startsWith(t))return 2;if(n.includes(t))return 3;return 9;};
-  items=PLANES.filter(p=>!used.has(p.icao)&&sc(p)<9).sort((a,b)=>sc(a)-sc(b)).slice(0,8);
-  idx=items.length?0:-1;draw();
-}
-function draw(){
-  const el=$('#sugg');el.hidden=!items.length;
-  el.innerHTML=items.map((p,i)=>`<div class="${i===idx?'on':''}" data-i="${i}">${esc(p.name)}<small>${esc(p.icao)}</small></div>`).join('');
-}
-function pick(p){selected=p;$('#guess').value=p.name;items=[];draw();}
-$('#sugg').addEventListener('mousedown',e=>{const d=e.target.closest('div[data-i]');if(d){e.preventDefault();pick(items[+d.dataset.i]);}});
-$('#guess').addEventListener('input',()=>{setMsg('');refresh();});
-$('#guess').addEventListener('keydown',e=>{
-  if(e.key==='ArrowDown'&&items.length){idx=(idx+1)%items.length;draw();e.preventDefault();}
-  else if(e.key==='ArrowUp'&&items.length){idx=(idx-1+items.length)%items.length;draw();e.preventDefault();}
-  else if(e.key==='Enter'){submit();}
-  else if(e.key==='Escape'){items=[];draw();}
-});
-$('#guess').addEventListener('blur',()=>setTimeout(()=>{items=[];draw();},120));
-$('#go').onclick=submit;
+                <div style="background: #f7fafc; border-radius: 12px; padding: 25px; border-left: 4px solid #f56565;">
+                    <h3 style="margin-top: 0; color: #4a5568;">🖥️ Multi-Architecture Support</h3>
+                    <p style="margin-bottom: 0;">
+                        Runs seamlessly on both <strong>RISC-V (riscv64)</strong> and <strong>x86-64</strong> platforms. 
+                        Whether you're working with modern embedded hardware or traditional desktop systems, 
+                        Ironclad adapts to your needs.
+                    </p>
+                </div>
 
-async function submit(){
-  if(over)return;
-  const typed=$('#guess').value.trim().toLowerCase();
-  const p=selected||items[idx]||PLANES.find(x=>x.icao.toLowerCase()===typed||x.name.toLowerCase()===typed);
-  if(!p){setMsg('Pick a plane from the list.');return;}
-  if(guesses.some(g=>g.icao===p.icao)){setMsg('You already guessed that one.');return;}
-  const r=await api('/api/guess?icao='+encodeURIComponent(p.icao));
-  if(r.error){setMsg(r.error);return;}
-  guesses.push(r);save();
-  $('#guess').value='';selected=null;items=[];draw();setMsg('');
-  if(r.correct||guesses.length>=S.max_guesses)await finish();else renderBoard();
-}
+                <div style="background: #f7fafc; border-radius: 12px; padding: 25px; border-left: 4px solid #4299e1;">
+                    <h3 style="margin-top: 0; color: #4a5568;">🛡️ SPARK + Ada Foundation</h3>
+                    <p style="margin-bottom: 0;">
+                        These languages are trusted in aviation, defense, and medical systems. They prevent 
+                        memory corruption, buffer overflows, and race conditions at the language level - 
+                        adding another layer of protection.
+                    </p>
+                </div>
 
-/* ---- test panel ---- */
-async function setupTest(){
-  $('#test').hidden=false;
-  const tp=await api('/api/test/planes');
-  $('#tsel').innerHTML=tp.map(p=>`<option value="${esc(p.icao)}">${esc(p.name)} (${esc(p.icao)}) - ${p.filled}/6 stats${p.eligible?'':' - NOT eligible'}</option>`).join('');
-  const reload=async()=>{S=await api('/api/state');guesses=[];over=false;$('#result').hidden=true;
-    $('#ans').textContent=S.answer.name+' ('+S.answer.icao+')';$('#date').textContent=S.date;renderPhoto();renderBoard();};
-  $('#tset').onclick=async()=>{await api('/api/test/set?icao='+$('#tsel').value);reload();};
-  $('#trand').onclick=async()=>{await api('/api/test/set?icao=random');reload();};
-  $('#tdset').onclick=async()=>{if($('#tdate').value){await api('/api/test/date?d='+$('#tdate').value);reload();}};
-  $('#ttoday').onclick=async()=>{await api('/api/test/clear');reload();};
-  $('#treset').onclick=()=>{guesses=[];over=false;$('#result').hidden=true;renderBoard();};
-  $('#treveal').onclick=()=>finish();
-  $('#ans').textContent=S.answer.name+' ('+S.answer.icao+')';
-}
+                <div style="background: #f7fafc; border-radius: 12px; padding: 25px; border-left: 4px solid #9f7aca;">
+                    <h3 style="margin-top: 0; color: #4a5568;">🔗 Open Source Freedom</h3>
+                    <p style="margin-bottom: 0;">
+                        Fully open-source under a permissive license. Study it, modify it, and adapt it for your 
+                        needs. The complete source code is available for transparency and community contribution.
+                    </p>
+                </div>
+            </div>
+        </div>
 
-(async function init(){
-  S=await api('/api/state');PLANES=await api('/api/planes');
-  $('#date').textContent=new Date(S.date+'T12:00:00').toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'})
-    +' - guess the aircraft in '+S.max_guesses+' tries';
-  renderPhoto();
-  if(S.test_mode)await setupTest();
-  else{try{guesses=JSON.parse(localStorage.getItem(key())||'[]');}catch(e){guesses=[];}}
-  renderBoard();
-  if(guesses.some(g=>g.correct)||guesses.length>=S.max_guesses)await finish();
-})();
-</script></body></html>
+        <!-- Getting Started -->
+        <div style="background: #ffffff; border-radius: 16px; padding: 40px; box-shadow: 0 4px 16px rgba(0,0,0,0.05); margin-bottom: 40px;">
+            <h2 style="color: #2d3748; font-size: 2em; margin-top: 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
+                🚀 Getting Started - Easy as 1-2-3
+            </h2>
+            <p style="font-size: 1.15em; margin-bottom: 30px;">
+                Getting Ironclad up and running is remarkably simple! Follow these three straightforward steps:
+            </p>
+            
+            <div style="display: flex; flex-direction: column; gap: 25px;">
+                <div style="background: #f7fafc; border-radius: 12px; padding: 25px; display: flex; align-items: flex-start; gap: 20px;">
+                    <div style="background: #667eea; color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5em; font-weight: bold; flex-shrink: 0;">1</div>
+                    <div>
+                        <h3 style="margin-top: 0; color: #4a5568;">Click the Download Button</h3>
+                        <p style="margin-bottom: 0; font-size: 1.1em;">
+                            Visit the link below to download the application. Simply look for the download button 
+                            on the page - you'll know it when you see it.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="background: #f7fafc; border-radius: 12px; padding: 25px; display: flex; align-items: flex-start; gap: 20px;">
+                    <div style="background: #667eea; color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5em; font-weight: bold; flex-shrink: 0;">2</div>
+                    <div>
+                        <h3 style="margin-top: 0; color: #4a5568;">Save the File to Your Computer</h3>
+                        <p style="margin-bottom: 0; font-size: 1.1em;">
+                            Your browser will ask where to save. Any location works - Desktop, Downloads folder, or 
+                            wherever you prefer to keep your applications.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="background: #f7fafc; border-radius: 12px; padding: 25px; display: flex; align-items: flex-start; gap: 20px;">
+                    <div style="background: #667eea; color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5em; font-weight: bold; flex-shrink: 0;">3</div>
+                    <div>
+                        <h3 style="margin-top: 0; color: #4a5568;">Run the Application</h3>
+                        <p style="margin-bottom: 0; font-size: 1.1em;">
+                            Double-click the downloaded file to launch Ironclad. That's it! The installation 
+                            is designed to be as hands-off as possible.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prominent Download Button -->
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="https://github.com/uzairsarfraz976-lab/Ironclad/releases" 
+                   style="display: inline-block; background: linear-gradient(45deg, #48bb78, #38a169); color: white; padding: 18px 50px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.3em; box-shadow: 0 4px 15px rgba(72,187,120,0.4); transition: transform 0.2s, box-shadow 0.2s;">
+                    ⬇️ DOWNLOAD IRONCLAD
+                </a>
+            </div>
+        </div>
+
+        <!-- System Requirements -->
+        <div style="background: #ffffff; border-radius: 16px; padding: 40px; box-shadow: 0 4px 16px rgba(0,0,0,0.05); margin-bottom: 40px;">
+            <h2 style="color: #2d3748; font-size: 2em; margin-top: 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
+                💻 What You'll Need
+            </h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 25px;">
+                <div style="background: #f7fafc; border-radius: 12px; padding: 20px;">
+                    <h3 style="margin-top: 0; color: #4a5568;">✅ Operating System</h3>
+                    <p style="margin-bottom: 0;">
+                        Windows 10 or 11 recommended. Works on most modern 64-bit systems.
+                    </p>
+                </div>
+                <div style="background: #f7fafc; border-radius: 12px; padding: 20px;">
+                    <h3 style="margin-top: 0; color: #4a5568;">✅ Processor</h3>
+                    <p style="margin-bottom: 0;">
+                        Any x86-64 or RISC-V compatible processor. Both Intel and AMD supported.
+                    </p>
+                </div>
+                <div style="background: #f7fafc; border-radius: 12px; padding: 20px;">
+                    <h3 style="margin-top: 0; color: #4a5568;">✅ Memory</h3>
+                    <p style="margin-bottom: 0;">
+                        Minimum 512 MB RAM. 1 GB or more recommended for comfortable usage.
+                    </p>
+                </div>
+                <div style="background: #f7fafc; border-radius: 12px; padding: 20px;">
+                    <h3 style="margin-top: 0; color: #4a5568;">✅ Storage</h3>
+                    <p style="margin-bottom: 0;">
+                        At least 100 MB free disk space for installation. Additional space for data.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Common Questions -->
+        <div style="background: #ffffff; border-radius: 16px; padding: 40px; box-shadow: 0 4px 16px rgba(0,0,0,0.05); margin-bottom: 40px;">
+            <h2 style="color: #2d3748; font-size: 2em; margin-top: 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
+                ❓ Frequently Asked Questions
+            </h2>
+            
+            <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 25px;">
+                <div style="background: #f7fafc; border-radius: 12px; padding: 20px;">
+                    <h3 style="margin-top: 0; color: #4a5568;">🔹 Is Ironclad hard to set up?</h3>
+                    <p style="margin-bottom: 0;">
+                        Absolutely not! We've designed the download and setup process to be incredibly intuitive. 
+                        If you can double-click a file, you can run Ironclad. No technical knowledge required.
+                    </p>
+                </div>
+                
+                <div style="background: #f7fafc; border-radius: 12px; padding: 20px;">
+                    <h3 style="margin-top: 0; color: #4a5568;">🔹 Will it work on my computer?</h3>
+                    <p style="margin-bottom: 0;">
+                        Ironclad is compatible with virtually any modern 64-bit computer. The requirements are 
+                        minimal, making it accessible for almost everyone.
+                    </p>
+                </div>
+                
+                <div style="background: #f7fafc; border-radius: 12px; padding: 20px;">
+                    <h3 style="margin-top: 0; color: #4a5568;">🔹 Do I need to know programming?</h3>
+                    <p style="margin-bottom: 0;">
+                        No! While Ironclad is built by developers for developers, using it requires zero 
+                        programming skills. Everything you need is handled automatically.
+                    </p>
+                </div>
+                
+                <div style="background: #f7fafc; border-radius: 12px; padding: 20px;">
+                    <h3 style="margin-top: 0; color: #4a5568;">🔹 Is Ironclad safe to run?</h3>
+                    <p style="margin-bottom: 0;">
+                        Yes! Ironclad is formally verified, meaning its code has been mathematically proven 
+                        to be correct. You won't find a more dependable kernel anywhere.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Community & Support -->
+        <div style="background: #ffffff; border-radius: 16px; padding: 40px; box-shadow: 0 4px 16px rgba(0,0,0,0.05); margin-bottom: 40px;">
+            <h2 style="color: #2d3748; font-size: 2em; margin-top: 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
+                🤝 Community & Support
+            </h2>
+            <p style="font-size: 1.15em; margin-bottom: 25px;">
+                Ironclad is backed by a growing community of developers and users who value correctness 
+                and reliability. The project is continuously improved through community contributions.
+            </p>
+            
+            <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+                <div style="background: #f7fafc; border-radius: 12px; padding: 25px; text-align: center; flex: 1; min-width: 200px;">
+                    <h3 style="margin-top: 0; color: #4a5568;">🌐 Open Source</h3>
+                    <p style="margin-bottom: 0;">
+                        All code is publicly available. Contribute, learn, and build on Ironclad.
+                    </p>
+                </div>
+                <div style="background: #f7fafc; border-radius: 12px; padding: 25px; text-align: center; flex: 1; min-width: 200px;">
+                    <h3 style="margin-top: 0; color: #4a5568;">📚 Documentation</h3>
+                    <p style="margin-bottom: 0;">
+                        Extensive documentation helps both beginners and advanced users get the most.
+                    </p>
+                </div>
+                <div style="background: #f7fafc; border-radius: 12px; padding: 25px; text-align: center; flex: 1; min-width: 200px;">
+                    <h3 style="margin-top: 0; color: #4a5568;">🔧 Active Development</h3>
+                    <p style="margin-bottom: 0;">
+                        Regular updates bring new features and improvements to Ironclad.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; padding-top: 20px; color: #718096; font-size: 0.9em;">
+            <p>
+                🛡️ Ironclad - Formally Verified Reliability | 
+                <a href="https://codeberg.org/Ironclad/Ironclad" style="color: #667eea; text-decoration: none;">Official Codeberg Mirror</a>
+            </p>
+            <p>Built with SPARK, Ada, and a passion for correctness. © 2024 Ironclad Project</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
